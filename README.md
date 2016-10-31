@@ -4,6 +4,13 @@ A simple C++ program that converts the date format of a ``.csv`` file from ``dd/
 
 A possible application could be to prepare a ``.csv`` to be imported in a SQLite database.
 
+#### Requirements
+* make
+* GNU Compiler - g++
+
+To compile just cd into the cloned directory and type ``make``.
+
+
 #### Usage
 ```bash
 csv_date_format -i <filename.csv> -f <field to be modified>
