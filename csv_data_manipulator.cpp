@@ -35,6 +35,23 @@ CSVData::CSVData(string filename) :
 
 // ----------------------------------------------------------------------------------------------------------|
 
+const string CSVData::get_value(int row, int col)
+{
+     if (row >= m_rows || col >= m_cols) return "";
+     return const_cast<string&>(m_data.at(row).at(col));
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::set_value(int row, int col, string value)
+{
+     if (row >= m_rows || col >= m_cols) return;
+
+     m_data.at(row).at(col) = value;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
 void CSVData::read_file(string filename)
 {
     ifstream input_file(filename.c_str());

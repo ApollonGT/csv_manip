@@ -12,6 +12,11 @@ class CSVData {
 
         bool is_modified() { return m_is_modified; }
         bool is_unified() { return m_is_unified; }
+        int  columns() { return m_cols; }
+        int  rows() { return m_rows; }
+
+        const std::string get_value(int row, int col);
+        void set_value(int row, int col, std::string value);
 
         void read_file(std::string filename);
         void write_data(std::string filename);
