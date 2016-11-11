@@ -54,10 +54,10 @@ my_data.set_value(row, column, "42");
 my_data.delete_row(row);
 
 // Deletes an entire column
-my_data.delete_col(int col);
+my_data.delete_col(column);
 
 // Deletes a specific cell resulting to non unified data
-delete_item(row, col);
+delete_item(row, column);
 
 // Reads CSV file data. This replaces the old data.
 my_data.read_file("ecample.csv");
