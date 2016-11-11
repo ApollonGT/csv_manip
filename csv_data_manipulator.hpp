@@ -17,11 +17,16 @@ class CSVData {
 
         const std::string get_value(int row, int col);
         void set_value(int row, int col, std::string value);
+	
+        void delete_row(int row);
+        void delete_col(int col);
+        void delete_item(int row, int col);
 
         void read_file(std::string filename);
         void write_data(std::string filename);
 
         void convert_date_format(std::string old_format, std::string new_format, int column);
+        void convert_date_format(std::string old_format, std::string new_format, int row, int column);
 
     private:
         std::vector< std::vector<std::string> > m_data;

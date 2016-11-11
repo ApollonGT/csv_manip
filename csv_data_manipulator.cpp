@@ -52,6 +52,42 @@ void CSVData::set_value(int row, int col, string value)
 
 // ----------------------------------------------------------------------------------------------------------|
 
+void CSVData::delete_row(int row)
+{
+	if (row >= m_rows || row < 0) return;
+	m_data.erase(m_data.begin() + row);
+	m_rows--;
+	m_is_modified = true;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::delete_col(int col)
+{
+	if (col >= m_cols || col < 0) return;
+	for (int i = 0; i < m_data.size(); ++i) {
+		if (col < m_data.at(i).size()) {
+			m_data.at(i).erase(m_data.at(i).begin() + col);
+			m_is_modified = true;
+			m_is_unified = false;
+		}
+	}
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::delete_item(int row, int col)
+{
+	if (row >= m_rows || row < 0) return;
+	if (col >= m_data.at(row).size() || col < 0) return;
+
+	m_data.at(row).erase(m_data.at(row).begin() + col);
+	m_is_modified = true;
+	m_is_unified = false;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
 void CSVData::read_file(string filename)
 {
     ifstream input_file(filename.c_str());
@@ -61,6 +97,7 @@ void CSVData::read_file(string filename)
         return;
     }
 
+    m_data.clear();
     string line;
 
     int cols = 0;
@@ -136,6 +173,36 @@ void CSVData::convert_date_format(string old_format, string new_format, int colu
 
         m_data.at(row).at(column) = new_date;
     }
+
+    m_is_modified = true;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::convert_date_format(string old_format, string new_format, int row, int column)
+{
+    if (column >= m_cols) {
+        cerr << "Invalid column number: " << column << endl;
+        return;
+    }
+
+    if (row >= m_rows) {
+        cerr << "Invalid row number: " << row << endl;
+        return;
+    }
+
+    vector<string> row_data = m_data.at(row);
+
+    string old_date = row_data.at(column);
+    std::tm od;
+    strptime(old_date.c_str(), old_format.c_str(), &od);
+
+    char buffer[256];
+    strftime(buffer, sizeof(buffer), new_format.c_str(), &od);
+
+    string new_date(buffer);
+
+    m_data.at(row).at(column) = new_date;
 
     m_is_modified = true;
 }
