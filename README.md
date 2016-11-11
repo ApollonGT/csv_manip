@@ -79,9 +79,37 @@ string new_format("%Y-%m-%d");
 my_data.convert_date_format(old_format, new_format, row, column);
 ```
 
+##### Delete If
+
+An extra method has been added, but because of it's importance I will mention it separately. This API will be used as a tool for csv data manipulation.
+The first step in these cases is to filter your data and remove the useless entries (extreme values etc.). The ``delete_row_if`` method is exactly for this purpose.
+
+*Usage*
+
+```cpp
+bool id_is_even(int row, int col, const string &val)
+{
+    int i_val = atoi( val.c_str() );
+    if ( col == 0 && i_val > 0 && i_val % 2 == 0 ) return true;
+    return false;
+}
+
+CSVData my_data("test_data.csv");
+
+// This will delete all rows where the first column is even number, greater than zero.
+my_data.delete_row_if(id_is_even);
+```
+
 #### Remarks
 
 * Note that all indices are zero-based. Which means the first row is ``int row = 0;`` and the first column is ``int col = 0;``.
+* Note that the callback of ``delete_row_if`` method must be of the form:
+
+    ```cpp
+    bool <function_name>(int row, int col, const string &value);
+    ```
+
+    When the callback returns ``true`` the row will be deleted.
 
 #### Examples
 

@@ -2,6 +2,7 @@
 #define CSV_DATA_MANIPULATOR
 
 #include <vector>
+#include <functional>
 
 class CSVData {
     public:
@@ -17,10 +18,11 @@ class CSVData {
 
         const std::string get_value(int row, int col);
         void set_value(int row, int col, std::string value);
-	
+
         void delete_row(int row);
         void delete_col(int col);
         void delete_item(int row, int col);
+        void delete_row_if(std::function<bool(int, int, const std::string&)> cbFun);
 
         void read_file(std::string filename);
         void write_data(std::string filename);

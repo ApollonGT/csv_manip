@@ -1,5 +1,6 @@
 // System headers
 #include <iostream>
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -58,6 +59,27 @@ void CSVData::delete_row(int row)
 	m_data.erase(m_data.begin() + row);
 	m_rows--;
 	m_is_modified = true;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::delete_row_if(function<bool(int, int, const std::string&)> cbFun)
+{
+    vector<int> rows_to_delete;
+
+    for (int row = 0; row < m_data.size(); ++row) {
+        for (int col = 0; col < m_data.at(row).size(); ++col) {
+            if ( cbFun(row, col, m_data.at(row).at(col)) ) {
+                rows_to_delete.push_back(row);
+                break;
+            }
+        }
+    }
+
+    if (rows_to_delete.size() > 0) {
+        sort(rows_to_delete.begin(), rows_to_delete.end(), std::greater<int>());
+        for (int row = 0; row < rows_to_delete.size(); ++row) delete_row(rows_to_delete.at(row));
+    }
 }
 
 // ----------------------------------------------------------------------------------------------------------|
