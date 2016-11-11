@@ -67,12 +67,15 @@ my_data.write_data("example1.csv");
 
 // Convert date format of an entire column
 int column = 3;
-string old_format = "%d/%m/%Y", new_format = "%Y-%m-%d";
+string old_format("%d/%m/%Y")
+string new_format("%Y-%m-%d");
 my_data.convert_date_format(old_format, new_format, column);
 
 // Convert date format of a cell
-int row = 0, column = 3;
-string old_format = "%d/%m/%Y", new_format = "%Y-%m-%d";
+int row = 0;
+int column = 3;
+string old_format("%d/%m/%Y")
+string new_format("%Y-%m-%d");
 my_data.convert_date_format(old_format, new_format, row, column);
 ```
 
