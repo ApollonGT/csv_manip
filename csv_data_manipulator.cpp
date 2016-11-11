@@ -154,27 +154,7 @@ void CSVData::write_data(string filename)
 
 void CSVData::convert_date_format(string old_format, string new_format, int column)
 {
-    if (column > m_cols) {
-        cerr << "Invalid column number: " << column << endl;
-        return;
-    }
-
-    for (int row = 0; row < m_data.size(); ++row) {
-        vector<string> row_data = m_data.at(row);
-
-        string old_date = row_data.at(column);
-        std::tm od;
-        strptime(old_date.c_str(), old_format.c_str(), &od);
-
-        char buffer[256];
-        strftime(buffer, sizeof(buffer), new_format.c_str(), &od);
-
-        string new_date(buffer);
-
-        m_data.at(row).at(column) = new_date;
-    }
-
-    m_is_modified = true;
+    for (int row = 0; row < m_data.size(); ++row) convert_date_format(old_format, new_format, row, column);
 }
 
 // ----------------------------------------------------------------------------------------------------------|
