@@ -79,6 +79,10 @@ string new_format("%Y-%m-%d");
 my_data.convert_date_format(old_format, new_format, row, column);
 ```
 
+#### Remarks
+
+* Note that all indices are zero-based. Which means the first row is ``int row = 0;`` and the first column is ``int col = 0;``.
+
 #### Examples
 
 ##### Example 1
