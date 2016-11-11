@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "csv_data_manipulator.hpp"
+#include "../csv_data_manipulator.hpp"
 
 using namespace std;
 

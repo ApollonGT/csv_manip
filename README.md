@@ -110,26 +110,51 @@ my_data.delete_row_if(id_is_even);
     ```
 
     When the callback returns ``true`` the row will be deleted.
+* To clean up the object files and the executables, type ``make clean``.
 
 #### Examples
 
+To compile each example, use ``make example#``. If you want to compile example 1 type ``make example1``. 
+The executables and the csv files are located in the ``examples`` folder.
+
 ##### Example 1
 
-In this example we read ``date_example.csv`` file and convert the date format from ``dd/mm/YYYY`` to ``YYYY-mm-dd``.
+In this example we read ``example_1_data.csv`` file and convert the date format from ``dd/mm/YYYY`` to ``YYYY-mm-dd``.
 
 *Usage*
 
 ```bash
-csv_date_format -i <filename.csv> -f <field to be modified>
+cd examples
+./example_1 -i <filename>.csv -f <field to be modified>
 ```
 
 So with the command
 
 ```bash
-csv_date_format -i test.csv -f 3
+./example_1 -i example_1_data.csv -f 3
 ```
 
-we get a ``<date_example_new.csf>`` file with the new date format.
+we get a ``example_1_data_new.csv`` file with the new date format.
+
+##### Example 2
+
+Lets assume we have entries where the first column is the id of the entry and we want to keep only the entries with odd ids.
+In this example we read ``example_2_data.csv`` file and remove all the rows that have even number in the first column.
+
+*Usage*
+
+```bash
+cd examples
+./example_2 -i <filename>.csv
+```
+
+So with the command
+
+```bash
+./example_2 -i example_2_data.csv
+```
+
+we get a ``example_2_data_new.csv`` file which contains only the data of the ``example_2_data.csv`` that have odd number in the first column.
 
 #### License
 See the [License](https://github.com/ApollonGT/csv_manip/blob/master/LICENSE) page.
