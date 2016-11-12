@@ -13,12 +13,12 @@ int main(int argc, char const* argv[])
 {
     /*  Experiment here */
 
-    //string filename("your_file.csv");
+    string filename("examples/csv_10000_lines.csv");
+    string new_filename("examples/csv_10000_lines_new.csv");
 
-    //CSVData csv_data(filename);
+    CSVData csv_data(filename);
 
-    // This will replace initial file
-    //csv_data.write_data(filename);
+    csv_data.write_data(new_filename);
 
     return 0;
 }

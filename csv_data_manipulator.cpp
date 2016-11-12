@@ -9,6 +9,10 @@
 
 #include "csv_data_manipulator.hpp"
 
+#define C_STRING_DELIMITER '"'
+#define S_STRING_DELIMITER "\""
+#define TMP_DELIM_REPLACEMENT "#|#"
+
 using namespace std;
 
 // ==========================================================================================================|
@@ -124,12 +128,46 @@ void CSVData::read_file(const string &filename)
 
     int cols = 0;
     while (getline(input_file, line)) {
+        int contains_strings = 0;
+        if ( (contains_strings = count(line.begin(), line.end(), C_STRING_DELIMITER)) > 0 ) {
+            size_t left = line.find(C_STRING_DELIMITER, 0);
+            size_t right = line.find(C_STRING_DELIMITER, left + 1);
+
+            while (left != string::npos && right != string::npos) {
+                size_t found = left;
+                while (true) {
+                    found = line.find(C_STRING_DELIMITER, found);
+                    if (found == string::npos) break;
+
+                    line.replace(found, 1, TMP_DELIM_REPLACEMENT);
+                    found += 3;
+                }
+
+                left = line.find(C_STRING_DELIMITER, right);
+                right = line.find(C_STRING_DELIMITER, left + 1);
+            }
+        }
+
         stringstream ss(line);
-        string tok;
+        string tok, i_row;
         vector<string> row;
 
         while (getline(ss, tok, CSV_DELIMITER)) {
-            row.push_back(tok);
+            if (tok.find(TMP_DELIM_REPLACEMENT) != string::npos) {
+                i_row = tok;
+
+                size_t found = 0;
+                while (true) {
+                    found = i_row.find(TMP_DELIM_REPLACEMENT, found);
+                    if (found == string::npos) break;
+
+                    i_row.replace(found, 3, string(S_STRING_DELIMITER));
+                    found++;
+                }
+            } else {
+                i_row = tok;
+            }
+            row.push_back(i_row);
         }
 
         if (cols != 0 && cols != row.size()) m_is_unified = false;
