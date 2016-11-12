@@ -8,7 +8,7 @@ class CSVData {
     public:
         CSVData();
         CSVData(CSVData &rhs);
-        CSVData(std::string filename);
+        CSVData(const std::string &filename);
         ~CSVData() {  }
 
         bool is_modified() { return m_is_modified; }
@@ -24,11 +24,11 @@ class CSVData {
         void delete_item(int row, int col);
         void delete_row_if(std::function<bool(int, int, const std::string&)> cbFun);
 
-        void read_file(std::string filename);
-        void write_data(std::string filename);
+        void read_file(const std::string &filename);
+        void write_data(const std::string &filename);
 
-        void convert_date_format(std::string old_format, std::string new_format, int column);
-        void convert_date_format(std::string old_format, std::string new_format, int row, int column);
+        void convert_date_format(const std::string &old_format, const std::string &new_format, int column);
+        void convert_date_format(const std::string &old_format, const std::string &new_format, int row, int column);
 
     private:
         std::vector< std::vector<std::string> > m_data;

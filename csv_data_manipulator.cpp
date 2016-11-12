@@ -27,7 +27,7 @@ CSVData::CSVData(CSVData &rhs) :
 
 // ----------------------------------------------------------------------------------------------------------|
 
-CSVData::CSVData(string filename) :
+CSVData::CSVData(const string &filename) :
     m_is_modified(false), m_is_unified(true), m_rows(0), m_cols(0)
 {
     read_file(filename);
@@ -110,7 +110,7 @@ void CSVData::delete_item(int row, int col)
 
 // ----------------------------------------------------------------------------------------------------------|
 
-void CSVData::read_file(string filename)
+void CSVData::read_file(const string &filename)
 {
     ifstream input_file(filename.c_str());
 
@@ -148,7 +148,7 @@ void CSVData::read_file(string filename)
 
 // ----------------------------------------------------------------------------------------------------------|
 
-void CSVData::write_data(string filename)
+void CSVData::write_data(const string &filename)
 {
     ofstream output_file(filename.c_str(), ofstream::out);
 
@@ -174,14 +174,14 @@ void CSVData::write_data(string filename)
 
 // ----------------------------------------------------------------------------------------------------------|
 
-void CSVData::convert_date_format(string old_format, string new_format, int column)
+void CSVData::convert_date_format(const std::string &old_format, const std::string &new_format, int column)
 {
     for (int row = 0; row < m_data.size(); ++row) convert_date_format(old_format, new_format, row, column);
 }
 
 // ----------------------------------------------------------------------------------------------------------|
 
-void CSVData::convert_date_format(string old_format, string new_format, int row, int column)
+void CSVData::convert_date_format(const std::string &old_format, const std::string &new_format, int row, int column)
 {
     if (column >= m_cols) {
         cerr << "Invalid column number: " << column << endl;
