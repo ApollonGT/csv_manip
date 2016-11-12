@@ -50,6 +50,15 @@ my_data.get_value(row, column);
 // Modifies the value of a cell
 my_data.set_value(row, column, "42");
 
+// Adds new row in the end of the file
+vector<string> new_row;
+[... add values in new_row ...]
+my_data.add_row(new_row);
+
+// Adds new row in the defined position. pos = 0 is the first row.
+int pos = 0;
+my_data.add_row(new_row, pos);
+
 // Deletes an entire row
 my_data.delete_row(row);
 

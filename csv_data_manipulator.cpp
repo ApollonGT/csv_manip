@@ -57,6 +57,33 @@ void CSVData::set_value(int row, int col, string value)
 
 // ----------------------------------------------------------------------------------------------------------|
 
+void CSVData::add_row(vector<string> row_data)
+{
+     size_t new_row_size = row_data.size();
+     if (new_row_size != m_cols && m_is_unified) m_is_unified = false;
+     m_data.push_back(row_data);
+     m_rows++;
+     if (m_cols < new_row_size) m_cols = new_row_size;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::add_row(vector<string> row_data, int pos)
+{
+     if (pos < 0 || pos >= m_data.size()) return;
+
+     vector< vector<string> >::iterator it = m_data.begin() + pos;
+
+     size_t new_row_size = row_data.size();
+     if (new_row_size != m_cols && m_is_unified) m_is_unified = false;
+
+     m_data.insert(it, row_data);
+     m_rows++;
+     if (m_cols < new_row_size) m_cols = new_row_size;
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
 void CSVData::delete_row(int row)
 {
 	if (row >= m_rows || row < 0) return;

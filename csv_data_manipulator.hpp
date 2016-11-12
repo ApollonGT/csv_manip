@@ -19,6 +19,8 @@ class CSVData {
         const std::string get_value(int row, int col);
         void set_value(int row, int col, std::string value);
 
+        void add_row(std::vector<std::string> row_data);
+        void add_row(std::vector<std::string> row_data, int pos);
         void delete_row(int row);
         void delete_col(int col);
         void delete_item(int row, int col);
