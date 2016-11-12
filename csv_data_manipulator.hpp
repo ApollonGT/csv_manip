@@ -30,6 +30,8 @@ class CSVData {
         void convert_date_format(const std::string &old_format, const std::string &new_format, int column);
         void convert_date_format(const std::string &old_format, const std::string &new_format, int row, int column);
 
+        const char* get_version() { return VERSION; }
+
     private:
         std::vector< std::vector<std::string> > m_data;
 
@@ -39,6 +41,7 @@ class CSVData {
         int m_cols;
 
         static const char CSV_DELIMITER = ',';
+        static constexpr const char *VERSION = "v0.2a";
 
 }; // CSVData
 
