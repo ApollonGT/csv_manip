@@ -9,10 +9,8 @@
 #include "csv_data_manipulator.hpp"
 
 // --- CONSTANTS --- //
-const char *CSVData::VERSION = "v0.2a";
-
+const char *CSVData::VERSION = "v0.2a"; // XXX: Update version here
 const char CSVData::CSV_DELIMITER = ',';
-
 const char CSVData::C_STRING_DELIMITER = '"';
 const char *CSVData::S_STRING_DELIMITER = "\"";
 const char *CSVData::TMP_DELIM_REPLACEMENT = "#|#";

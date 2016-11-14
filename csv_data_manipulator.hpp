@@ -44,9 +44,7 @@ class CSVData {
 
         // --- CONSTANTS --- //
         static const char *VERSION;
-
         static const char CSV_DELIMITER;
-
         static const char C_STRING_DELIMITER;
         static const char *S_STRING_DELIMITER;
         static const char *TMP_DELIM_REPLACEMENT;
