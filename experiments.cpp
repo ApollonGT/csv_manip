@@ -3,7 +3,7 @@
  * This file contains the main function for user experimentation.
  */
 #include <iostream>
-#include <stdexcept>
+//#include <stdexcept> // try{}catch{}
 
 #include "csv_data_manipulator.hpp"
 
