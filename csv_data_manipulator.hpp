@@ -42,8 +42,14 @@ class CSVData {
         int m_rows;
         int m_cols;
 
-        static const char CSV_DELIMITER = ',';
-        static constexpr const char *VERSION = "v0.2a";
+        // --- CONSTANTS --- //
+        static const char *VERSION;
+
+        static const char CSV_DELIMITER;
+
+        static const char C_STRING_DELIMITER;
+        static const char *S_STRING_DELIMITER;
+        static const char *TMP_DELIM_REPLACEMENT;
 
 }; // CSVData
 

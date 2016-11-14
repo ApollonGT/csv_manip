@@ -8,9 +8,15 @@
 
 #include "csv_data_manipulator.hpp"
 
-#define C_STRING_DELIMITER '"'
-#define S_STRING_DELIMITER "\""
-#define TMP_DELIM_REPLACEMENT "#|#"
+// --- CONSTANTS --- //
+const char *CSVData::VERSION = "v0.2a";
+
+const char CSVData::CSV_DELIMITER = ',';
+
+const char CSVData::C_STRING_DELIMITER = '"';
+const char *CSVData::S_STRING_DELIMITER = "\"";
+const char *CSVData::TMP_DELIM_REPLACEMENT = "#|#";
+// ----------------- //
 
 using namespace std;
 
