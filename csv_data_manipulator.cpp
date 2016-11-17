@@ -45,7 +45,7 @@ CSVData::CSVData(const string &filename) :
 
 const string CSVData::get_value(int row, int col)
 {
-     if (row >= m_rows || col >= m_cols) return "";
+     if (row >= m_rows || col >= m_cols || row < 0 || col < 0) return "";
      return const_cast<string&>(m_data.at(row).at(col));
 }
 
@@ -53,7 +53,7 @@ const string CSVData::get_value(int row, int col)
 
 void CSVData::set_value(int row, int col, string value)
 {
-     if (row >= m_rows || col >= m_cols) return;
+     if (row >= m_rows || col >= m_cols || row < 0 || col < 0) return;
 
      m_data.at(row).at(col) = value;
 }
@@ -125,7 +125,6 @@ void CSVData::delete_col(int col)
 		if (col < m_data.at(i).size()) {
 			m_data.at(i).erase(m_data.at(i).begin() + col);
 			m_is_modified = true;
-			m_is_unified = false;
 		}
 	}
 }
