@@ -219,13 +219,18 @@ void CSVData::write_data(const string &filename)
 {
     ofstream output_file(filename.c_str(), ofstream::out);
 
+    if (!output_file.is_open()) {
+        cerr << "Unable to open file '" << filename << "'. Check if you have the right permissions." << endl;
+        return;
+    }
+
     for (int row = 0; row < m_data.size(); ++row) {
         string new_line;
 
         vector<string> row_data = m_data.at(row);
         for (int i = 0; i < row_data.size(); i++) {
             new_line.append(row_data.at(i));
-            new_line.append(",");
+            new_line.append(string(1, CSV_DELIMITER));
         }
 
         size_t last_comma = new_line.find_last_of(",");
@@ -250,12 +255,12 @@ void CSVData::convert_date_format(const std::string &old_format, const std::stri
 
 void CSVData::convert_date_format(const std::string &old_format, const std::string &new_format, int row, int column)
 {
-    if (column >= m_cols) {
+    if (column < 0 || column >= m_cols) {
         cerr << "Invalid column number: " << column << endl;
         return;
     }
 
-    if (row >= m_rows) {
+    if (row < 0 || row >= m_rows) {
         cerr << "Invalid row number: " << row << endl;
         return;
     }
