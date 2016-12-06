@@ -124,7 +124,7 @@ my_data.delete_row_if(id_is_even);
     When the callback returns ``true`` the row will be deleted.
 * To clean up the object files and the executables, type ``make clean``.
 * Note that the sorting method checks for numbers otherwise sorts alphanumerically. A date is considered as string.
-* sort_by_col second argument can be *CSVData::ACS* or *CSVData::DECSA*
+* sort_by_col second argument can be *CSVData::ACS* or *CSVData::DECS*
 
 #### Examples
 
