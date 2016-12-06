@@ -14,6 +14,10 @@ const char CSVData::CSV_DELIMITER = ',';
 const char CSVData::C_STRING_DELIMITER = '"';
 const char *CSVData::S_STRING_DELIMITER = "\"";
 const char *CSVData::TMP_DELIM_REPLACEMENT = "#|#";
+const char CSVData::DECIMAL_DELIMITER = '.';
+
+const int CSVData::ASC = 1;
+const int CSVData::DESC = 2;
 // ----------------- //
 
 using namespace std;
@@ -279,6 +283,56 @@ void CSVData::convert_date_format(const std::string &old_format, const std::stri
     m_data.at(row).at(column) = new_date;
 
     m_is_modified = true;
+}
+
+// ==========================================================================================================|
+
+static bool is_digits(const string &str)
+{
+    return std::all_of(str.begin(), str.end(), ::isdigit);
+}
+
+// ==========================================================================================================|
+
+void CSVData::sort_by_col(int col, int order)
+{
+    auto acs_compare_fun = [&](const vector< string > &row1, const vector< string > &row2) {
+        bool ret_val;
+
+        if (is_digits(row1[col]) && is_digits(row2[col])) {
+            auto a = (row1[col].find(DECIMAL_DELIMITER) != string::npos) ? stod(row1[col]) : stol(row1[col]);
+            auto b = (row2[col].find(DECIMAL_DELIMITER) != string::npos) ? stod(row2[col]) : stol(row2[col]);
+            ret_val = a < b;
+        } else {
+             ret_val = row1[col] < row2[col];
+        }
+
+        return ret_val;
+    };
+
+    auto desc_compare_fun = [&](const vector< string > &row1, const vector< string > &row2) {
+        bool ret_val;
+
+        if (is_digits(row1[col]) && is_digits(row2[col])) {
+            auto a = (row1[col].find(DECIMAL_DELIMITER) != string::npos) ? stod(row1[col]) : stol(row1[col]);
+            auto b = (row2[col].find(DECIMAL_DELIMITER) != string::npos) ? stod(row2[col]) : stol(row2[col]);
+            ret_val = a > b;
+        } else {
+             ret_val = row1[col] > row2[col];
+        }
+
+        return ret_val;
+    };
+
+    switch (order) {
+        case DESC:
+            sort(m_data.begin(), m_data.end(), desc_compare_fun);
+            break;
+        case ASC:
+        default:
+            sort(m_data.begin(), m_data.end(), acs_compare_fun);
+            break;
+    }
 }
 
 // ==========================================================================================================|

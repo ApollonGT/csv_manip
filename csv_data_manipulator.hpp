@@ -34,6 +34,12 @@ class CSVData {
 
         const char* get_version() { return VERSION; }
 
+        void sort_by_col(int col, int order);
+
+        // --- PUBLIC CONSTANTS --- //
+        static const int ASC;
+        static const int DESC;
+
     private:
         std::vector< std::vector<std::string> > m_data;
 
@@ -48,6 +54,7 @@ class CSVData {
         static const char C_STRING_DELIMITER;
         static const char *S_STRING_DELIMITER;
         static const char *TMP_DELIM_REPLACEMENT;
+        static const char DECIMAL_DELIMITER;
 
 }; // CSVData
 

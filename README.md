@@ -86,6 +86,9 @@ int column = 3;
 string old_format("%d/%m/%Y")
 string new_format("%Y-%m-%d");
 my_data.convert_date_format(old_format, new_format, row, column);
+
+// Sort rows by column values
+my_data.sort_by_col(column, CSVData::ACS);
 ```
 
 ##### Delete If
@@ -120,6 +123,8 @@ my_data.delete_row_if(id_is_even);
 
     When the callback returns ``true`` the row will be deleted.
 * To clean up the object files and the executables, type ``make clean``.
+* Note that the sorting method checks for numbers otherwise sorts alphanumerically. A date is considered as string.
+* sort_by_col second argument can be *CSVData::ACS* or *CSVData::DECSA*
 
 #### Examples
 
@@ -164,6 +169,26 @@ So with the command
 ```
 
 we get a ``example_2_data_new.csv`` file which contains only the data of the ``example_2_data.csv`` that have odd number in the first column.
+
+##### Example 3
+
+Lets assume we have entries where the first column is the id of the entry but the rows are shuffled. We need to sort the data by id.
+In this example we read ``example_3_data.csv`` file and sort the data by the first column.
+
+*Usage*
+
+```bash
+cd examples
+./example_3 -i <filename>.csv -c <column>
+```
+
+So with the command
+
+```bash
+./example_3 -i example_3_data.csv -c 0
+```
+
+we get a ``example_3_data_new.csv`` file which contains the data of the ``example_3_data.csv`` sorted by the first column.
 
 #### License
 See the [License](https://github.com/ApollonGT/csv_manip/blob/master/LICENSE) page.

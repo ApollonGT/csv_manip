@@ -35,8 +35,19 @@ example2.o : examples/example_2.cpp csv_data_manipulator.hpp
 	@echo "Compiling example 2"
 	@$(CPP) -c examples/example_2.cpp -o examples/example_2.o $(CPPFLAGS)
 
+EXAMPLE3="examples/example_3"
+
+example3: example3.o csv_data_manipulator.o
+	@echo "Linking $(EXAMPLE3)"
+	@$(CPP) -o $(EXAMPLE3) examples/example_3.o csv_data_manipulator.o
+
+example3.o : examples/example_3.cpp csv_data_manipulator.hpp
+	@echo "Compiling example 3"
+	@$(CPP) -c examples/example_3.cpp -o examples/example_3.o $(CPPFLAGS)
+
 clean:
 	@echo "Cleaning up"
 	@rm -f $(TARGET) experiments.o csv_data_manipulator.o
 	@rm -f $(EXAMPLE1) examples/example_1.o
 	@rm -f $(EXAMPLE2) examples/example_2.o
+	@rm -f $(EXAMPLE3) examples/example_3.o
