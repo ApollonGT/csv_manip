@@ -333,6 +333,8 @@ void CSVData::sort_by_col(int col, int order)
             sort(m_data.begin(), m_data.end(), acs_compare_fun);
             break;
     }
+
+    m_is_modified = true;
 }
 
 // ==========================================================================================================|
