@@ -89,6 +89,9 @@ my_data.convert_date_format(old_format, new_format, row, column);
 
 // Sort rows by column values
 my_data.sort_by_col(column, CSVData::ACS);
+
+// Append some data from a file to existing data
+my_data.append_file("new_file.csv");
 ```
 
 ##### Delete If
@@ -189,6 +192,26 @@ So with the command
 ```
 
 we get a ``example_3_data_new.csv`` file which contains the data of the ``example_3_data.csv`` sorted by the first column.
+
+##### Example 4
+
+Lets assume we have multiple files and we want to merge the data and manipulate them as one set of data.
+In this example we read ``example_4_data_1.csv`` file and then ``example_4_data_2.csv`` in the same data. Then we output the results in a final file.
+
+*Usage*
+
+```bash
+cd examples
+./example_4 -i <filename>.csv -a <filename>.csv
+```
+
+So with the command
+
+```bash
+./example_4 -i example_4_data_1.csv -a example_4_data_2.csv
+```
+
+we get a ``example_4_data_new.csv`` file which contains the data of the ``example_4_data_1.csv`` and ``example_4_data_2.csv`` merged in one file.
 
 #### License
 See the [License](https://github.com/ApollonGT/csv_manip/blob/master/LICENSE) page.
