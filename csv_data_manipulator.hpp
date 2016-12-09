@@ -36,6 +36,7 @@ class CSVData {
         const char* get_version() { return VERSION; }
 
         void sort_by_col(int col, int order);
+        void make_data_unique();
 
         // --- PUBLIC CONSTANTS --- //
         static const int ASC;

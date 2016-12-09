@@ -92,6 +92,11 @@ my_data.sort_by_col(column, CSVData::ACS);
 
 // Append some data from a file to existing data
 my_data.append_file("new_file.csv");
+
+// Make data unique
+my_data.make_data_unique();
+// Note: This method works only on unified data, 
+//       which means all the rows must have the same number of columns.
 ```
 
 ##### Delete If
@@ -212,6 +217,26 @@ So with the command
 ```
 
 we get a ``example_4_data_new.csv`` file which contains the data of the ``example_4_data_1.csv`` and ``example_4_data_2.csv`` merged in one file.
+
+##### Example 5
+
+In this example we test the experimental functionality of making the data unique using the ``make_data_unique`` method.
+In the example 5 the filenames are hardcoded inside the source file ``example_5.cpp``. Just compile it and run it.
+
+*Usage*
+
+```bash
+cd examples
+./example_5
+```
+
+So the command
+
+```bash
+./example_5
+```
+
+outputs a ``example_5_data_new.csv`` file which contains the data of the ``example_5_data.csv`` without repeating rows.
 
 #### License
 See the [License](https://github.com/ApollonGT/csv_manip/blob/master/LICENSE) page.

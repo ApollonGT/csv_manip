@@ -217,7 +217,7 @@ void CSVData::_read_file(const std::string &filename, std::vector< std::vector<s
             row.push_back(i_row);
         }
 
-        if (cols != row.size()) m_is_unified = false;
+        if (cols != 0 && cols != row.size()) m_is_unified = false;
 
         cols = row.size();
 
@@ -370,6 +370,21 @@ void CSVData::sort_by_col(int col, int order)
     }
 
     m_is_modified = true;
+}
+
+// ==========================================================================================================|
+
+void CSVData::make_data_unique()
+{
+    if (!m_is_unified) {
+        cout << "Data are not unified. Cannot check all the data." << endl;
+        return;
+    }
+
+    for (int col = 0; col < m_cols; col++) {
+        sort_by_col(col, ASC);
+        m_data.erase(unique(m_data.begin(), m_data.end()), m_data.end());
+    }
 }
 
 // ==========================================================================================================|
