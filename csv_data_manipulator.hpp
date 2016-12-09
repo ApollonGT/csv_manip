@@ -27,6 +27,7 @@ class CSVData {
         void delete_row_if(std::function<bool(int, int, const std::string&)> cbFun);
 
         void read_file(const std::string &filename);
+        void append_file(const std::string &filename);
         void write_data(const std::string &filename);
 
         void convert_date_format(const std::string &old_format, const std::string &new_format, int column);
@@ -55,6 +56,10 @@ class CSVData {
         static const char *S_STRING_DELIMITER;
         static const char *TMP_DELIM_REPLACEMENT;
         static const char DECIMAL_DELIMITER;
+
+        // --- private functions --- //
+        void _read_file(const std::string &filename, std::vector< std::vector<std::string> > &target, int &cols);
+        void _append_data(std::vector< std::vector<std::string> > &data);
 
 }; // CSVData
 

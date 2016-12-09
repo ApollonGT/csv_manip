@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
+#include <iterator>
 // --------------
 
 #include "csv_data_manipulator.hpp"
@@ -147,7 +148,22 @@ void CSVData::delete_item(int row, int col)
 
 // ----------------------------------------------------------------------------------------------------------|
 
-void CSVData::read_file(const string &filename)
+void CSVData::_append_data(std::vector< std::vector<std::string> > &data)
+{
+    if (data.empty()) return;
+
+    if (m_data.empty()) {
+        m_data = move(data);
+    } else {
+        m_data.reserve(m_data.size() + data.size());
+        move(data.begin(), data.end(), back_inserter(m_data));
+        data.clear();
+    }
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::_read_file(const std::string &filename, std::vector< std::vector<std::string> > &target, int &cols)
 {
     ifstream input_file(filename.c_str());
 
@@ -156,10 +172,8 @@ void CSVData::read_file(const string &filename)
         return;
     }
 
-    m_data.clear();
     string line;
 
-    int cols = 0;
     while (getline(input_file, line)) {
         int contains_strings = 0;
         if ( (contains_strings = count(line.begin(), line.end(), C_STRING_DELIMITER)) > 0 ) {
@@ -203,17 +217,38 @@ void CSVData::read_file(const string &filename)
             row.push_back(i_row);
         }
 
-        if (cols != 0 && cols != row.size()) m_is_unified = false;
+        if (cols != row.size()) m_is_unified = false;
 
         cols = row.size();
 
-        m_data.push_back(row);
+        target.push_back(row);
     }
 
     input_file.close();
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::read_file(const string &filename)
+{
+    m_data.clear();
+
+    _read_file(filename, m_data, m_cols);
 
     m_is_modified = true;
-    m_cols = cols;
+    m_rows = m_data.size();
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::append_file(const string &filename)
+{
+    std::vector< std::vector<std::string> > new_data;
+
+    _read_file(filename, new_data, m_cols);
+    _append_data(new_data);
+
+    m_is_modified = true;
     m_rows = m_data.size();
 }
 
