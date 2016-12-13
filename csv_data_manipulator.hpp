@@ -25,6 +25,8 @@ class CSVData {
         void delete_col(int col);
         void delete_item(int row, int col);
         void delete_row_if(std::function<bool(int, int, const std::string&)> cbFun);
+        void delete_row_if(std::function<bool(int, int, const std::string&, void *cbData)> cbFun, void *cbData);
+        void delete_row_if(std::function<bool(int, const std::vector< std::string > &, void *cbData)> cbFun, void *cbData);
 
         void read_file(const std::string &filename);
         void append_file(const std::string &filename);

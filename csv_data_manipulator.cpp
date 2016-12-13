@@ -102,13 +102,33 @@ void CSVData::delete_row(int row)
 
 // ----------------------------------------------------------------------------------------------------------|
 
-void CSVData::delete_row_if(function<bool(int, int, const std::string&)> cbFun)
+void CSVData::delete_row_if(function<bool(int, const std::vector< std::string > &, void *cbData)> cbFun,
+        void *cbData)
+{
+    vector<int> rows_to_delete;
+
+    for (int row = 0; row < m_data.size(); ++row) {
+        if ( cbFun(row, m_data.at(row), cbData) ) {
+            rows_to_delete.push_back(row);
+            break;
+        }
+    }
+
+    if (rows_to_delete.size() > 0) {
+        sort(rows_to_delete.begin(), rows_to_delete.end(), std::greater<int>());
+        for (int row = 0; row < rows_to_delete.size(); ++row) delete_row(rows_to_delete.at(row));
+    }
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::delete_row_if(function<bool(int, int, const std::string&, void *cbData)> cbFun, void *cbData)
 {
     vector<int> rows_to_delete;
 
     for (int row = 0; row < m_data.size(); ++row) {
         for (int col = 0; col < m_data.at(row).size(); ++col) {
-            if ( cbFun(row, col, m_data.at(row).at(col)) ) {
+            if ( cbFun(row, col, m_data.at(row).at(col), cbData) ) {
                 rows_to_delete.push_back(row);
                 break;
             }
@@ -119,6 +139,18 @@ void CSVData::delete_row_if(function<bool(int, int, const std::string&)> cbFun)
         sort(rows_to_delete.begin(), rows_to_delete.end(), std::greater<int>());
         for (int row = 0; row < rows_to_delete.size(); ++row) delete_row(rows_to_delete.at(row));
     }
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+void CSVData::delete_row_if(function<bool(int, int, const std::string&)> cbFun)
+{
+    function<bool(int, int, const std::string&, void *cbData)> simple_delete_row_if =
+        [=](int row, int col, const std::string& val, void *cbData) {
+            return cbFun(row, col, val);
+        };
+
+    delete_row_if(simple_delete_row_if, nullptr);
 }
 
 // ----------------------------------------------------------------------------------------------------------|

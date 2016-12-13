@@ -133,6 +133,40 @@ my_data.delete_row_if(id_is_even);
 * To clean up the object files and the executables, type ``make clean``.
 * Note that the sorting method checks for numbers otherwise sorts alphanumerically. A date is considered as string.
 * sort_by_col second argument can be *CSVData::ACS* or *CSVData::DECS*
+* Note that delete_row_if can be called in three ways:
+    ```cpp
+    bool function_1(int row, int col, const std::string &value) 
+    {
+        // This function runs on each cell of the data.
+        // The 'value' is the value of the cell.
+    }
+
+    bool function_2(int row, int col, const std::string &value, void *cbData)
+    {
+        // This function runs on each cell of the data.
+        // The 'value' is the value of the cell.
+        // The 'cbData' is the callback data that can be passed by the user.
+
+        // To access data:
+        std::string data = (*std::string *)cbData;
+    }
+
+    bool function_3(int row, const std::vector< std::string > &row_data, void *cbData)
+    {
+        // This function runs on each row of the data.
+        // The 'row_data' is a vector that contains the values of the specific row.
+        // The 'cbData' is the callback data that can be passed by the user.
+
+        // To access data:
+        std::string data = (*std::string *)cbData;
+    }
+
+    std::string cbData("remove_me");
+
+    my_data.delete_row_if(function_1);
+    my_data.delete_row_if(function_2, &cbData);
+    my_data.delete_row_if(function_3, &cbData);
+    ```
 
 #### Examples
 
