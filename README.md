@@ -148,7 +148,7 @@ my_data.delete_row_if(id_is_even);
         // The 'cbData' is the callback data that can be passed by the user.
 
         // To access data:
-        std::string data = (*std::string *)cbData;
+        std::string data = *(std::string *)cbData;
     }
 
     bool function_3(int row, const std::vector< std::string > &row_data, void *cbData)
@@ -158,7 +158,7 @@ my_data.delete_row_if(id_is_even);
         // The 'cbData' is the callback data that can be passed by the user.
 
         // To access data:
-        std::string data = (*std::string *)cbData;
+        std::string data = *(std::string *)cbData;
     }
 
     std::string cbData("remove_me");
