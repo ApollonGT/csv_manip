@@ -110,7 +110,6 @@ void CSVData::delete_row_if(function<bool(int, const std::vector< std::string > 
     for (int row = 0; row < m_data.size(); ++row) {
         if ( cbFun(row, m_data.at(row), cbData) ) {
             rows_to_delete.push_back(row);
-            break;
         }
     }
 
