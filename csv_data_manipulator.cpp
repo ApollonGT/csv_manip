@@ -25,6 +25,25 @@ using namespace std;
 
 // ==========================================================================================================|
 
+bool os_safe_getline(istream &is, string &s)
+{
+    s.clear();
+
+    char c;
+
+    while (is.get(c)) {
+        if (is.eof()) {
+            return false;
+        } else if (c == '\n' || c == '\r') {
+            return true;
+        } else {
+            s += c;
+        }
+    }
+}
+
+// ==========================================================================================================|
+
 CSVData::CSVData() : m_is_modified(false), m_is_unified(true), m_rows(0), m_cols(0)
 {
 }
@@ -205,7 +224,7 @@ void CSVData::_read_file(const std::string &filename, std::vector< std::vector<s
 
     string line;
 
-    while (getline(input_file, line)) {
+    while (os_safe_getline(input_file, line)) {
         int contains_strings = 0;
         if ( (contains_strings = count(line.begin(), line.end(), C_STRING_DELIMITER)) > 0 ) {
             size_t left = line.find(C_STRING_DELIMITER, 0);
