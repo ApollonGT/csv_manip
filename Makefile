@@ -51,6 +51,10 @@ example4: example4.o csv_data_manipulator.o
 	@echo "Linking $(EXAMPLE4)"
 	@$(CPP) -o $(EXAMPLE4) examples/example_4.o csv_data_manipulator.o
 
+example4.o : examples/example_4.cpp csv_data_manipulator.hpp
+	@echo "Compiling example 4"
+	@$(CPP) -c examples/example_4.cpp -o examples/example_4.o $(CPPFLAGS)
+
 EXAMPLE5="examples/example_5"
 
 example5: example5.o csv_data_manipulator.o
