@@ -40,6 +40,8 @@ bool os_safe_getline(istream &is, string &s)
             s += c;
         }
     }
+
+    return false;
 }
 
 // ==========================================================================================================|
@@ -71,6 +73,14 @@ const string CSVData::get_value(int row, int col)
 {
      if (row >= m_rows || col >= m_cols || row < 0 || col < 0) return "";
      return const_cast<string&>(m_data.at(row).at(col));
+}
+
+// ----------------------------------------------------------------------------------------------------------|
+
+const vector<string> CSVData::get_row(int row)
+{
+     if (row >= m_rows || row < 0) return vector<string>();
+     return const_cast<vector<string>&>(m_data.at(row));
 }
 
 // ----------------------------------------------------------------------------------------------------------|
