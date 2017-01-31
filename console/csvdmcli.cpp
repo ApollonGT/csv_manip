@@ -11,6 +11,7 @@
 #include "string.h"
 
 #include "../csv_data_manipulator.hpp"
+#include "cli_help.hpp"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ enum {
     CSV_CMD_SHOW,
     CSV_CMD_VERSION,
     CSV_CMD_DELETE,
+    CSV_CMD_HELP,
 
     CSV_CMD_END
 };
@@ -52,6 +54,8 @@ bool init_command_map(std::map<std::string, int> &command_map)
     if (!add_item_to_map(command_map, "show", CSV_CMD_SHOW)) return false;
     if (!add_item_to_map(command_map, "version", CSV_CMD_VERSION)) return false;
     if (!add_item_to_map(command_map, "delete", CSV_CMD_DELETE)) return false;
+    if (!add_item_to_map(command_map, "h", CSV_CMD_HELP)) return false;
+    if (!add_item_to_map(command_map, "help", CSV_CMD_HELP)) return false;
 
     return true;
 }
@@ -102,7 +106,7 @@ std::string execute_known_command(CSVData &main_data, int cmd_code, std::vector<
                     } else if (i_row_idx < 1 || i_row_idx > main_data.rows()) {
                          ret_val.append("Index out of range.");
                     } else {
-                        ret_val.append("Row "+row_idx+" : ");
+                        ret_val.append("Row "+to_string(i_row_idx)+" : ");
                         std::vector<std::string> row_data = main_data.get_row(i_row_idx - 1);
                         for (int i = 0; i < row_data.size(); i++) ret_val.append(row_data.at(i)+",");
                     }
@@ -146,6 +150,9 @@ std::string execute_known_command(CSVData &main_data, int cmd_code, std::vector<
             break;
         case CSV_CMD_VERSION:
             ret_val.assign(main_data.get_version());
+            break;
+        case CSV_CMD_HELP:
+            ret_val.assign(get_help_text());
             break;
         default:
             ret_val.assign("Invalid command.");
