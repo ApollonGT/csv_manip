@@ -279,9 +279,10 @@ void CSVData::_read_file(const std::string &filename, std::vector< std::vector<s
 
         if (cols != 0 && cols != row.size()) m_is_unified = false;
 
-        cols = row.size();
+        int rsz = row.size();
+        cols = max(cols, rsz);
 
-        target.push_back(row);
+        if (row.size() > 0) target.push_back(row);
     }
 
     input_file.close();
