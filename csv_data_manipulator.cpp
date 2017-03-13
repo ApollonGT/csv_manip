@@ -21,6 +21,10 @@ const int CSVData::ASC = 1;
 const int CSVData::DESC = 2;
 // ----------------- //
 
+// ---  MACROS   --- //
+#define DEBUG_MODE 0
+// ----------------- //
+
 using namespace std;
 
 // ==========================================================================================================|
@@ -34,7 +38,11 @@ bool os_safe_getline(istream &is, string &s)
     while (is.get(c)) {
         if (is.eof()) {
             return false;
-        } else if (c == '\n' || c == '\r') {
+        } else if (c == '\n') {
+            return true;
+        } else if (c == '\r') {
+            is.get(c);
+            if (c != '\n') is.putback(c);
             return true;
         } else {
             s += c;
@@ -233,9 +241,11 @@ void CSVData::_read_file(const std::string &filename, std::vector< std::vector<s
     }
 
     string line;
+    int current_line = 0;
 
     while (os_safe_getline(input_file, line)) {
         int contains_strings = 0;
+        current_line++;
         if ( (contains_strings = count(line.begin(), line.end(), C_STRING_DELIMITER)) > 0 ) {
             size_t left = line.find(C_STRING_DELIMITER, 0);
             size_t right = line.find(C_STRING_DELIMITER, left + 1);
@@ -282,7 +292,12 @@ void CSVData::_read_file(const std::string &filename, std::vector< std::vector<s
         int rsz = row.size();
         cols = max(cols, rsz);
 
-        if (row.size() > 0) target.push_back(row);
+        if (row.size() > 0) {
+            target.push_back(row);
+        } else {
+            if (DEBUG_MODE) cout << "Line " << current_line << ": empty line" << endl;
+        }
+
     }
 
     input_file.close();
